@@ -31,7 +31,13 @@ export default class Home extends Component {
     }
 
     //Clear interval on real time stock purchase when unmounting from this component
-    componentWillUnmount() {
+
+    // componentWillUnmount(){
+    //   clearInterval(this.intervalId);
+    // }
+
+    //Clear interval when logging out or move to portfolio page or other page
+    intervalClear(){
         clearInterval(this.intervalId);
     }
 
@@ -70,13 +76,15 @@ export default class Home extends Component {
     }
 
     //Get Real time stock prices based on stocks in state stocks
-    autoStockData = () => {
-        //console.log(this.state.watchList.stock);
-        //let symbols = this.state.stock.join(",") 
-        API.batchStock(this.state.watchList.stock).then((res) => {
-            this.setState({ stockResponse: res.data });
-        })
-    }
+
+     autoStockData = () => {
+      //console.log(this.state.watchList.stock);
+      //let symbols = this.state.stock.join(",") 
+      API.batchStock(this.state.watchList.stock).then((res) => {
+          this.setState({stockResponse:res.data});
+          console.log(this.state.stockResponse);
+         })
+      }
 
     //Input value updated in state
     handleInputChange = (event) => {
@@ -161,18 +169,162 @@ export default class Home extends Component {
 
     //Logout User Link 
     logoutUser = () => {
+        this.intervalClear();
         localStorage.removeItem("loggedIn");
         API.signOutUser().then((res) => {
             console.log(res);
         }).catch(err => console.log(err));
     }
 
-    render() {
-        const { responseLiveStock } = this.state;
-        const watchListsymbol = this.state;
-        return (
-            <div className="container">
-                <Jumbotron />
+
+    //Go to Portfolio page when user clicked on portfolio link
+    userPortfolio = () => {
+        this.intervalClear();
+        this.props.history.push("/portfolio")
+    }
+    
+    render(){
+      const {responseLiveStock} = this.state;
+      const watchListsymbol = this.state;
+      return (
+        <div className="container">
+          <Jumbotron />
+          <hr></hr>
+          <Link to={'/login'} onClick={this.logoutUser}>Logout</Link><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          <Link to={'/portfolio'} onClick={this.userPortfolio.bind(this)}>Portfolio</Link>
+          <hr></hr>
+          <div className="row">
+            {/* Get one stock price form column */}
+            <div className="col-md-4">
+            <form className="form">
+            <div className="form-group">
+               {/* <label htmlFor="email">Email:</label> */}
+            <input type="text"
+            onChange={this.handleInputChange}
+            value={this.state.symbol}
+            name="symbol"
+            placeholder="GOOG"/>
+            </div>
+            <button className="btn btn-lg btn-info" disabled={!this.validateForm} onClick={this.handleFormSubmit}>Get-Quotes</button>
+            </form>
+
+            {/* <form className="form">
+                    <div className="form-group">
+                        <hr></hr>
+                    <input type="text"
+                        onChange={this.handleInputChange}
+                        value={this.state.quantity}
+                        name="quantity"
+                        placeholder="How many shares to buy?"/>
+                    </div>
+                   <button className="btn btn-lg btn-info" onClick={this.handleBuySubmit}>Buy</button>
+                <hr></hr>
+                  <div className="form-group">
+                    <input type="text"
+                        onChange={this.handleInputChange}
+                        value={this.state.sellquantity}
+                        name="sellquantity"
+                        placeholder="How many shares to sell?"/>
+                    </div>
+                    <button className="btn btn-lg btn-info" onClick={this.handleSellSubmit}>Sell</button>
+                </form> */}
+
+            </div> {/* 1st col-md-4 div end */}
+
+            {/* Get One stock data and appending to table */}
+            <div className="col-md-4">
+            {Object.keys(this.state.oneStockResponse).length === 0 ? (<p>No Symbol To display yet!!!</p>) : (
+            <tbody>
+            <tr>
+                <td>Stock</td><br></br>
+                <td>{this.state.oneStockResponse.data.quote.symbol}</td>
+            </tr>
+            <tr>
+                <td>Close</td><br></br>
+                <td>{this.state.oneStockResponse.data.quote.close}</td>
+            </tr>
+            <tr>
+                <td>Current $</td><br></br>
+                <td>{this.state.oneStockResponse.data.quote.latestPrice}</td>
+            </tr>
+            <tr>
+                <td>Change</td><br></br>
+                <td>{this.state.oneStockResponse.data.quote.change}</td>
+            </tr>
+            <tr>
+                <td>Change %</td><br></br>
+                <td>{this.state.oneStockResponse.data.quote.changePercent}</td>
+            </tr>
+            <tr>
+                <td>High</td><br></br>
+                <td>{this.state.oneStockResponse.data.quote.high}</td>
+            </tr>
+            <tr>
+                <td>Low</td><br></br>
+                <td>{this.state.oneStockResponse.data.quote.low}</td>
+            </tr>
+            <tr>
+                <td>52 Wk High</td><br></br>
+                <td>{this.state.oneStockResponse.data.quote.week52High}</td>
+            </tr>
+            <tr>
+                <td>52 Wk Low</td><br></br>
+                <td>{this.state.oneStockResponse.data.quote.week52Low}</td>
+            </tr>
+            </tbody>
+            )}
+            </div> {/* 2nd col-md-4 div end */}
+            
+            {/*Live stock col md 4 for multiple sotcks */}
+            <div style={{marginTop:10, height: 500, overflow:"auto"}} className="col-md-4">
+
+            {this.state.stockResponse
+               ? (
+            <div className="list-overflow-container">
+            <ul className="list-group">
+              {Object.keys(this.state.stockResponse).map((key, i) => {
+                  return (
+                      <li style={{height:100}} key={i} className="list-group-item">
+                          <div><h5 style={{display:"inline", float:"left"}}><span>{this.state.stockResponse[key].quote.symbol} : {this.state.stockResponse[key].quote.latestPrice.toFixed(2)}</span></h5>
+                          <div style={{display:"inline", float:"right"}}><h5 style={(this.state.stockResponse[key].quote.change > 0) ? {color:"green"} : {color:"red"}}>{this.state.stockResponse[key].quote.change}</h5></div></div><br />
+                          <div><p style={{display:"inlineBlock", float:"middle", fontSize:14}}>{this.state.stockResponse[key].quote.companyName}</p></div>
+                      </li>
+                )})}
+          </ul>
+            </div>
+               )
+             : <div>Loading...</div>}
+             <form style={{marginTop:10}}className="form text-center">
+            <div className="form-group text-center">
+               {/* <label htmlFor="email">Email:</label> */}
+             <input className="col-md-6" type="text"
+               onChange={this.handleWatchListInputChange}
+                value={this.state.watchListsymbol}
+                name="watchListsymbol"
+                placeholder="AA"/>
+            </div>
+            <button className="btn btn-lg btn-info" disabled={!this.validateForm} onClick={this.handleWatchListFormSubmit}>Add Watch List</button>
+            </form>
+            </div> {/* 3rd col-md-4 div end */}
+
+        </div> {/* First Row Div End   */}
+
+        {/* Live stock price update div */}
+        <div style={{textAling:"center"}} className="container">
+            <div style={{ textAlign: "center" }} className="row">
+            <div className="col-md-4">
+
+               <form className="form">
+                    <div className="form-group">
+                        <hr></hr>
+                        {/* <label htmlFor="email">Email:</label> */}
+                    <input type="text"
+                        onChange={this.handleInputChange}
+                        value={this.state.quantity}
+                        name="quantity"
+                        placeholder="How many shares to buy?"/>
+                    </div>
+                   <button className="btn btn-lg btn-info" onClick={this.handleBuySubmit}>Buy</button>
                 <hr></hr>
                 <Link to={'/login'} onClick={this.logoutUser}>Logout</Link>
                 <hr></hr>
