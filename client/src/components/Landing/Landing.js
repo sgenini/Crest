@@ -32,8 +32,8 @@ class Landing extends React.Component {
               <br />
               <p>Practice and hone your trading strategies using real-time stock market data, <br /> all delivered through IEX Trading's reliable and accurate API.</p>
               <br />
-              <MDBBtn color="elegant">Sign Up</MDBBtn>
-              <Link className="text-white" to="#">or <strong>Log In</strong></Link>
+              <Link to="/signup"><MDBBtn color="elegant">Sign Up</MDBBtn></Link>
+              <Link className="text-white" to="/login">or <strong>Log In</strong></Link>
             </MDBMask>
           </MDBView>
         </header>

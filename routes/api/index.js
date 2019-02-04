@@ -69,6 +69,7 @@ router.get("/logout", function(req,res){
 //Get Perticular user stock watchlist from stock table 
 router.get("/home/watchlist", isAuthenticated, function(req, res){
     db.Stock.findOne({where:{UserId:parseInt(req.user.id)}}).then(function(userstock){
+        console.log(userstock.dataValues);
         res.json(userstock.dataValues);
     });
 })
@@ -85,6 +86,21 @@ router.put("/home/watchlist", isAuthenticated, function(req, res){
         }
     });
 })
+
+//Get User Portfolio //Ritesh please work on this 
+router.get("/portfolio/:id", isAuthenticated, function(req, res){
+    console.log("portfolio id hit");
+    console.log(parseInt(req.user.id) === parseInt(req.params.id));
+    console.log("user id from req.user " + req.user.id);
+    console.log("user id from params " + req.params.id);
+    if(parseInt(req.user.id) === parseInt(req.params.id)){
+        db.Portfolio.findAll({where:{userId:parseInt(req.params.id)}}).then(function (userFolio){
+            console.log(userFolio);
+        })
+    }
+
+})
+
 // route to check Wallet Value
 router.get("/home/:id", isAuthenticated, function(req,res){ 
     db.Portfolio.findAll({

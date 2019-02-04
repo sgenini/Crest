@@ -31,7 +31,12 @@ export default class Home extends Component {
     }
 
     //Clear interval on real time stock purchase when unmounting from this component
-    componentWillUnmount() {
+    // componentWillUnmount(){
+    //   clearInterval(this.intervalId);
+    // }
+
+    //Clear interval when logging out or move to portfolio page or other page
+    intervalClear(){
         clearInterval(this.intervalId);
     }
 
@@ -70,13 +75,14 @@ export default class Home extends Component {
     }
 
     //Get Real time stock prices based on stocks in state stocks
-    autoStockData = () => {
-        //console.log(this.state.watchList.stock);
-        //let symbols = this.state.stock.join(",") 
-        API.batchStock(this.state.watchList.stock).then((res) => {
-            this.setState({ stockResponse: res.data });
-        })
-    }
+     autoStockData = () => {
+      //console.log(this.state.watchList.stock);
+      //let symbols = this.state.stock.join(",") 
+      API.batchStock(this.state.watchList.stock).then((res) => {
+          this.setState({stockResponse:res.data});
+          console.log(this.state.stockResponse);
+         })
+      }
 
     //Input value updated in state
     handleInputChange = (event) => {
@@ -161,12 +167,19 @@ export default class Home extends Component {
 
     //Logout User Link 
     logoutUser = () => {
+        this.intervalClear();
         localStorage.removeItem("loggedIn");
         API.signOutUser().then((res) => {
             console.log(res);
         }).catch(err => console.log(err));
     }
 
+        //Go to Portfolio page when user clicked on portfolio link
+    userPortfolio = () => {
+        this.intervalClear();
+        this.props.history.push("/portfolio")
+    }
+    
     render() {
         const { responseLiveStock } = this.state;
         const watchListsymbol = this.state;
@@ -175,6 +188,7 @@ export default class Home extends Component {
                 <Jumbotron />
                 <hr></hr>
                 <Link to={'/login'} onClick={this.logoutUser}>Logout</Link>
+                <Link to={'/portfolio'} onClick={this.userPortfolio.bind(this)}>Portfolio</Link>
                 <hr></hr>
 
                 <div className="row">
