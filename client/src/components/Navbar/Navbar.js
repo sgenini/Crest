@@ -33,6 +33,7 @@ class Navbar extends Component {
   }
 
   render() {
+    const isLoggedIn = localStorage.getItem("loggedIn");
     return (
       <div>
         <header>
@@ -47,7 +48,7 @@ class Navbar extends Component {
                     <MDBNavLink to="/home" className="text-uppercase" onClick={this.goToHomePage.bind(this)}>Home</MDBNavLink>
                   </MDBNavItem>
                   <MDBNavItem>
-                    <MDBNavLink to="/login" className="text-uppercase" onClick={this.logoutUser.bind(this)}>Log Out</MDBNavLink>
+                    {isLoggedIn ? (<MDBNavLink  to="/login" className="text-uppercase" onClick={this.logoutUser.bind(this)}>Log Out</MDBNavLink>): null}
                   </MDBNavItem>
                 </MDBNavbarNav>
               </MDBCollapse>
