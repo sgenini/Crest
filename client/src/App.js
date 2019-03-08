@@ -33,45 +33,44 @@ class App extends Component {
       <div>
          <Navbar />
          <Switch>
-           <Route exact path="/old-home" component={Home} />
+
            <Route exact path="/login" component={LoginUI} />
            <Route exact path="/signup" component={SignupUI} />
            <Route exact path="/landing" component={Landing} />
-           <Route exact path="/allocate" component={Allocation} />
+
+           {/* <Route exact path="/old-home" component={Home} />
            <Route exact path="/old-signup" component={Signup} />
            <Route exact path="/old-login" component={Login} />
-           <Route exact path="/" component={Landing} />
-           <Route exact path="/watchlist" component={WatchlistUI} />
            <Route exact path="/topstock" component={Topstock} />
            <Route exact path="/defaultStock" component={DefaultStock} />
-           <Route exact path="/cashcheck" component={CashCheck} />
-           <Route exact path="/PortfolioDiversityUI" component={PortfolioDiversityUI} />
-           <Route exact path="/PortfolioSummaryUI" component={PortfolioSummaryUI} />
-           <Route exact path="/PortfolioTransactionsUI" component={PortfolioTransactionsUI} />
-           <Route 
-              path="/home"
-              render={() =>
-                isLoggedIn ? (
-                  <Route component={HomeUI} />
-                ) : (
-                    <Route component={LoginUI} />
-                  )
-              }
-            />
+           <Route exact path="/cashcheck" component={CashCheck} /> */}
+
+           <Route exact path="/watchlist"
+              render = {() => isLoggedIn ? (<Route component={WatchlistUI} />) : (<Route component={LoginUI}/>)} /> 
+
+           <Route exact path="/allocate" 
+              render = {() => isLoggedIn ? (<Route component={Allocation} />) : (<Route component={LoginUI}/>)} /> 
+
+           <Route path="/PortfolioDiversityUI"
+              render = {() => isLoggedIn ? (<Route component={PortfolioDiversityUI} />) : (<Route component={LoginUI}/>)} /> 
+
+           <Route path="/PortfolioSummaryUI" 
+              render = {() => isLoggedIn ? (<Route component={PortfolioSummaryUI} />) : (<Route component={LoginUI}/>)} /> 
+
+           <Route path="/PortfolioTransactionsUI"
+              render = {() => isLoggedIn ? (<Route component={PortfolioTransactionsUI} />) : (<Route component={LoginUI}/>)} /> 
+
+           <Route path="/home"
+              render={() => isLoggedIn ? (<Route component={HomeUI} /> ) : (<Route component={LoginUI} />)} />
+
            <Route path="/portfolio" 
-              render={() => 
-                isLoggedIn ? ( 
-                 <Route component={PortfolioDiversityUI} />
-                 ) : (<Route component={Login} /> )} />
+              render={() => isLoggedIn ? ( <Route component={PortfolioDiversityUI} />) : (<Route component={Login} /> )} />
+
             <Route path="/transactions" 
-              render={() => 
-                isLoggedIn ? ( 
-                 <Route component={Transactions} />
-                 ) : (<Route component={Login} /> )} />
-           {/* <Route exact path="/login" component={Login} /> */}
-           {/* <Route exact path="/books" component={Books} />
-           <Route exact path="/books/:id" component={Detail} />
-           <Route component={NoMatch} /> */}
+              render={() => isLoggedIn ? ( <Route component={Transactions} />) : (<Route component={Login} /> )} />
+
+            <Route exact path="*" component={Landing} />
+
           </Switch>
         </div>
       </Router>
