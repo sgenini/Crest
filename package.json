@@ -1,7 +1,10 @@
 {
-  "name": "projectThree",
+  "name": "crest",
   "version": "1.0.0",
-  "description": "",
+  "engines": {
+    "node": "10.3.0"
+  },
+  "description": "Live stock trending platform",
   "main": "server.js",
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
@@ -29,7 +32,6 @@
     "if-env": "^1.0.4",
     "jspdf": "^1.5.3",
     "jspdf-autotable": "^3.0.9",
-    "mongoose": "^5.3.16",
     "mysql2": "^1.6.4",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
