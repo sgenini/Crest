@@ -1,11 +1,17 @@
 {
-  "main.js": "/static/js/main.1c286e29.chunk.js",
-  "main.js.map": "/static/js/main.1c286e29.chunk.js.map",
-  "static/js/1.d6c510f0.chunk.js": "/static/js/1.d6c510f0.chunk.js",
-  "static/js/1.d6c510f0.chunk.js.map": "/static/js/1.d6c510f0.chunk.js.map",
+  "main.css": "/static/css/main.e3ac0b15.chunk.css",
+  "main.js": "/static/js/main.5fda7633.chunk.js",
+  "main.js.map": "/static/js/main.5fda7633.chunk.js.map",
+  "static/css/1.e10d8858.chunk.css": "/static/css/1.e10d8858.chunk.css",
+  "static/js/1.0a1ff9d0.chunk.js": "/static/js/1.0a1ff9d0.chunk.js",
+  "static/js/1.0a1ff9d0.chunk.js.map": "/static/js/1.0a1ff9d0.chunk.js.map",
   "runtime~main.js": "/static/js/runtime~main.229c360f.js",
   "runtime~main.js.map": "/static/js/runtime~main.229c360f.js.map",
+  "static/media/mdb.css": "/static/media/Roboto-Bold.e31fcf18.ttf",
+  "static/media/all.min.css": "/static/media/fa-brands-400.662c24d0.woff2",
+  "static/css/main.e3ac0b15.chunk.css.map": "/static/css/main.e3ac0b15.chunk.css.map",
+  "static/css/1.e10d8858.chunk.css.map": "/static/css/1.e10d8858.chunk.css.map",
   "index.html": "/index.html",
-  "precache-manifest.e31f8ea1e5cce28706ac68808991303a.js": "/precache-manifest.e31f8ea1e5cce28706ac68808991303a.js",
+  "precache-manifest.2c90a3f740caca17bf94bc177705d2fe.js": "/precache-manifest.2c90a3f740caca17bf94bc177705d2fe.js",
   "service-worker.js": "/service-worker.js"
 }

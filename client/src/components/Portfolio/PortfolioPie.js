@@ -66,7 +66,7 @@ export default class PortfolioPie extends Component {
     totalPortfolio = () => {
          let totalStockValue = 0;
         this.state.userPortfolio.forEach(function(el){
-            totalStockValue +=(parseInt(el.Stockquantity)*parseFloat(el.latestPriceIEX));
+            totalStockValue +=(parseInt(el.quantity)*parseFloat(el.latestPriceIEX));
         })
         this.setState({totalValue:totalStockValue});
         console.log(this.state.totalValue);

@@ -61,7 +61,7 @@ export default class QuickPortfolio extends Component {
     totalPortfolio = () => {
          let totalStockValue = 0;
         this.state.userPortfolio.forEach(function(el){
-            totalStockValue +=(parseInt(el.Stockquantity)*parseFloat(el.latestPriceIEX));
+            totalStockValue +=(parseInt(el.quantity)*parseFloat(el.latestPriceIEX));
         })
         this.setState({totalValue:totalStockValue});
         console.log(this.state.totalValue);
@@ -83,11 +83,11 @@ export default class QuickPortfolio extends Component {
                  </thead>
                  <tbody>
                      {this.state.userPortfolio.map((data) => {
-                         if (data.Stockquantity != 0) {
+                         if (data.quantity != 0) {
                             return (
                             <tr>
                             <td><b>{data.symbol.toUpperCase()}</b></td>
-                            <td>{data.Stockquantity}</td>
+                            <td>{data.quantity}</td>
                             </tr>)
                          }
                      })}

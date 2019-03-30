@@ -44,8 +44,10 @@ export default class Portfolio extends Component {
 
     //API AJAX Call to user transaction table and generate user portfolio updated new table to get profit loss 
     getUserPortfolio = () => {
+        console.log("getUSerPort func hit");
         API.getUserPortfolioData(this.state.watchList.UserId).then((res) => {
             console.log(res.data);
+            console.log("above is the data response from the get user porfolio function")
             //this.setState({portfolio: res.data})
             this.setState({ updatePortfolio: res.data })
             const updatePort = res.data;

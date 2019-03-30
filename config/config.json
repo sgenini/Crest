@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "berkeley",
+    "password": "",
     "database": "crestdb",
     "host": "localhost",
     "dialect": "mysql"

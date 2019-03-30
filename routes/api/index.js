@@ -95,15 +95,27 @@ router.put("/home/watchlist", isAuthenticated, function (req, res) {
 //Get User Portfolio data for rendering on portfolio page
 router.get("/portfolio/:id", isAuthenticated, function(req, res){
     console.log(parseInt(req.user.id) === parseInt(req.params.id));
-    console.log("user id from req.user " + req.user.id);
-    console.log("user id from params " + req.params.id);
+    // console.log("user id from req.user " + req.user.id);
+    // console.log("user id from params " + req.params.id);
     if(parseInt(req.user.id) === parseInt(req.params.id)){
-        db.sequelize.query(`SELECT SUM(CASE buy WHEN 1 THEN quantity WHEN 0 THEN -quantity END) AS Stockquantity, SUM(CASE buy WHEN 1 THEN purchaseTotal WHEN 0 THEN -purchaseTotal END) AS TotalPurchase, symbol, userIdTransaction FROM crestdb.Transactions WHERE userIdTransaction=${req.params.id} GROUP BY symbol,userIdTransaction;`, { type: db.sequelize.QueryTypes.SELECT}).then(function(transactions) {
-            res.json(transactions)
-          });
-        // db.Portfolio.findAll({where:{userId:parseInt(req.params.id)}}).then(function (userFolio){
-        //     res.json(userFolio);  
-        // })
+        // db.sequelize.query(`SELECT SUM(CASE buy WHEN 1 THEN quantity WHEN 0 THEN -quantity END) AS Stockquantity, SUM(CASE buy WHEN 1 THEN purchaseTotal WHEN 0 THEN -purchaseTotal END) AS TotalPurchase, symbol, userIdTransaction FROM crestdb.Transactions WHERE userIdTransaction=${req.params.id} GROUP BY symbol,userIdTransaction;`, { type: db.sequelize.QueryTypes.SELECT}).then(function(transactions) {
+        //     console.log(transactions)
+        //     console.log('above is Riteshs transactions/portfolio response');
+        //     res.json(transactions)
+
+        //   });
+        db.Portfolio.findAll(
+            {
+                where:{
+                    userId:parseInt(req.params.id),
+                    symbol: { $not: 'initial'}
+                }
+            
+            }).then(function (userFolio){
+                console.log(userFolio);
+                console.log("above is userfolio my version");
+            res.json(userFolio);  
+        })
     }
 });
 

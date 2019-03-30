@@ -16,11 +16,14 @@ class FolioPie extends Component {
     componentDidMount() {
         const data = [];
         const res = this.props.data;
+        console.log(res);
+        console.log("above is the res");
         Object.keys(res).forEach(function (key) {
-            if (res[key].Stockquantity > 0)
+            if (res[key].quantity > 0)
                 data.push({
                     "label": res[key].symbol.toUpperCase(),
-                    "value": res[key].TotalPurchase.toFixed(2)
+                    "value": (res[key].latestPriceIEX.toFixed(2) * res[key].quantity)
+                    // "value": 100
                 })
         })
 

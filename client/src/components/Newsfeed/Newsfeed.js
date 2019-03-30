@@ -21,7 +21,7 @@ export default class Newsfeed extends Component {
        autoStockData = () => {
         let symbols = this.state.stock.join(",") 
         API.batchStock(symbols).then((res) => {
-            console.log("res.data")
+            // console.log("res.data")
             this.setState({stockResponse:res.data});
            })
         }
@@ -43,7 +43,7 @@ export default class Newsfeed extends Component {
             this.setState({symbol:this.state.symbol});
             console.log(this.state.symbol);
             API.iexStockNews(this.state.symbol).then((res) => {
-                console.log(res.data);
+                // console.log(res.data);
                 this.setState({oneStockNews: res.data});
             })
         }
@@ -52,7 +52,7 @@ export default class Newsfeed extends Component {
       //const response = {};
       const stockResponse = this.state;
       // const {symbol} = this.state;
-        console.log(this.state.stockResponse);
+        // console.log(this.state.stockResponse);
     //   console.log(this.state.newsResponse);
       //console.log(this.state.response.symbol + this.state.response.lastSalePrice);
       return(

@@ -48,10 +48,12 @@ export default class TotalValue extends Component {
     getUserPortfolio = () => {
         API.getUserPortfolioData(this.state.watchList.UserId).then((res) => {
             console.log(res.data);
+            console.log("above is the res.data from getUserPortfolio in TotalValue.js")
             //this.setState({portfolio: res.data})
             this.setState({ updatePortfolio: res.data })
             const updatePort = res.data;
             const updateWatchList = [];
+            console.log("this.state.updatePortfolio", this.state.updatePortfolio)
             this.state.updatePortfolio.forEach(function (el) {
                 updateWatchList.push(el.symbol)
                 //return updateWatchList
@@ -82,7 +84,7 @@ export default class TotalValue extends Component {
     totalPortfolio = () => {
          let totalStockValue = 0;
         this.state.userPortfolio.forEach(function(el){
-            totalStockValue +=(parseInt(el.Stockquantity)*parseFloat(el.latestPriceIEX));
+            totalStockValue +=(parseInt(el.quantity)*parseFloat(el.latestPriceIEX));
         })
         this.setState({totalStockValue})
         this.setState({totalValue: totalStockValue + this.state.userCash });
